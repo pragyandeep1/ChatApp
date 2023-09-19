@@ -1,0 +1,12 @@
+.label-css{
+    margin-bottom: 10px; display: block;
+}
+.input-css{
+    padding: 10px; margin-bottom: 10px; display: block;
+}
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    justify-content: flex-end;
+}

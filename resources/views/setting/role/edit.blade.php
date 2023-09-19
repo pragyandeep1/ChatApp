@@ -1,0 +1,127 @@
+
+@include('layouts.admin_layout.head-main')
+
+<head>
+
+@section('title') {{'BusinessOdisha'}} @endsection
+
+    @include('layouts.admin_layout.head')
+
+    <!-- select2 css -->
+    <link href="{{ asset('libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- dropzone css -->
+    <link href="{{ asset('libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <script src="{{ asset('js/pages/ecommerce-shop.init.js') }}"></script>
+    
+    @include('layouts.admin_layout.head-style')
+
+
+</head>
+<body data-topbar="dark">
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+@include('layouts.admin_layout.menu')
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <?php
+                $maintitle = "Ecommerce";
+                $title = "Edit Role";
+                ?>
+                @include('layouts.admin_layout.breadcrumb')
+                <!-- end page title -->
+
+
+                <div class="row">
+                    <div class="col-12">
+                    
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Basic Information</h4>
+                                <p class="card-title-desc">Fill all information below</p>
+                            </div>
+                            <div class="card-body">
+              <form method="POST" action="{{ route('roles.update',$role->id)}}">
+                  @csrf
+                  @method('put')
+                <div class="flex flex-col space-y-2">
+                  <label for="role_name" class="text-gray-700 select-none font-medium">Role Name</label>
+                  <input
+                    id="role_name"
+                    type="text"
+                    name="name"
+                    value="{{ old('name',$role->name) }}"
+                    placeholder="Placeholder"
+                    class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                  />
+                </div>
+
+                <h3 class="text-xl my-4 text-gray-600">Permissions</h3>
+                <div class="row">
+                  @foreach($permissions as $permission)
+                      <div class="col-4">
+                          <div class="d-flex flex-column justify-content-center">
+                          <div class="d-flex flex-column">
+                              <label class="d-inline-flex align-items-center mt-3">
+                                  <input type="checkbox" class="form-check-input" name="permissions[]" value="{{$permission->id}}"  @if(count($role->permissions->where('id',$permission->id)))
+                                      checked 
+                                    @endif
+                                  ><span class="ml-2 text-gray-700">{{ $permission->name }}</span>
+                              </label>
+                          </div>
+                          </div>
+                      </div>
+                  @endforeach
+                </div>
+                <div class="text-center mt-16">
+                  <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+                </div>
+                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- End Page-content -->
+
+        @include('layouts.admin_layout.footer')
+    </div>
+    <!-- end main content-->
+
+</div>
+<!-- END layout-wrapper -->
+
+@include('layouts.admin_layout.right-sidebar') 
+@include('layouts.admin_layout.vendor-scripts')
+
+<!-- select 2 plugin -->
+<script src="{{ asset('libs/select2/js/select2.min.js')}}"></script>
+
+<!-- dropzone plugin -->
+<script src="{{ asset('libs/dropzone/min/dropzone.min.js')}}"></script>
+
+<!-- init js -->
+<script src="{{ asset('js/pages/ecommerce-select2.init.js') }}"></script>
+<script>
+    $('#drp-down').on('select2:select', function (e) {
+        $("#form-data").css("display", "block");
+});
+
+</script>
+
+</body>
+
+</html>
+             
